@@ -314,6 +314,8 @@ process alignToReference {
 // **********
 process imputeHLA {
 
+	publishDir "${params.outdir}/imputeHLA", mode: 'copy'
+
 	input:
 	set file(bed),file(bim),file(fam) from bimbedfam_impute
 	each locus from LOCI
@@ -323,6 +325,7 @@ process imputeHLA {
 	file(impute_result) into imputation
 	set file(impute_result),val(locus) into imputation_tmp
 	file(same_result) into imputation_same
+	set file(impute_result)
 
 	script:	
 	impute_result = "imputation_" + checked_name + "_" + locus + ".RData"
